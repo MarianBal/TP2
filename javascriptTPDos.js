@@ -32,63 +32,50 @@ var local = {
 
 //1. Se pide desarrollar las siguientes funciones:
 
-//precioMaquina(componentes): recibe un array de componentes y devuelve el precio de la máquina que se puede armar con esos componentes, 
+//precioMaquina(componentes): recibe un array de componentes y devuelve el precio de la máquina que se puede armar con esos componentes,
 //que es la suma de los precios de cada componente incluido
 
+const precioMaquina = array=>{
+  const sumar = [];
 
-
-function precioMaquina (arrayComponentes){
-
-  if(arrayComponentes.length){
-  var sumPrecios = [];
-  
-    arrayComponentes.map(function(cadaComponente){
-      local.precios.map(function(precio){
-        if(precio.componente === cadaComponente){
-          sumPrecios.push(precio.precio)
-        }
-      })
-    })
-
-  return sumPrecios.reduce(function(total,suma){ //Este return retorna TODA la función
-
-    return total + suma; // Este este return es solo de esta función
-  })
-} else{
-  
-  return 0
+  array.length ? (array.map(a=>local.precios.map(p=>a === p.componente ? sumar.push(p.precio): null)))
+  : null;
+  return sumar.reduce((total, suma)=> total + suma)
 }
-  
-}
+
+console.log('PrecioMaquina')
 console.log(precioMaquina(["Monitor GPRS 3000", "Motherboard ASUS 1500"]))
 console.log(precioMaquina(["Monitor GPRS 3000", "Motherboard ASUS 1500"]))
 console.log(precioMaquina(["Monitor ASC 543", "Motherboard MZI"]))
 console.log(precioMaquina(["Monitor ASC 543", "Motherboard ASUS 1200"]))
 console.log(precioMaquina(["Monitor GPRS 3000", "Motherboard ASUS 1200"]))
+
 console.log('\n')
 
 //---------------------------------------------------------------------------------------------------------------------------
 
-//cantidadVentasComponente(componente): recibe un componente y devuelve la cantidad de veces que fue vendido, o sea que 
+//cantidadVentasComponente(componente): recibe un componente y devuelve la cantidad de veces que fue vendido, o sea que
 //formó parte de una máquina que se vendió. La lista de ventas no se pasa por parámetro, se asume que está identificada por la variable ventas.
 
 
-function cantidadVentasComponente(componente){
+// function cantidadVentasComponente(componente){
 
-  var i = 0;
+//   var i = 0;
 
-  local.ventas.map(function(cadaVenta){
+//   local.ventas.map(function(cadaVenta){
 
-     cadaVenta.componentes.map(function(cadaComponente){
+//      cadaVenta.componentes.map(function(cadaComponente){
 
-       if(componente === cadaComponente){
-         i++;
-       }
-     })
-  })
+//        if(componente === cadaComponente){
+//          i++;
+//        }
+//      })
+//   })
 
-  return i;
-}
+//   return i;
+// }
+
+console.log('cantidadVentasComponente');
 
 console.log( cantidadVentasComponente("Monitor GPRS 3000") ); // 3
 console.log( cantidadVentasComponente("Motherboard ASUS 1500") );//2
@@ -101,499 +88,499 @@ console.log( cantidadVentasComponente("RAM Quinston") );
 console.log( cantidadVentasComponente("RAM Quinston Fury") );
 console.log('\n')
 
-//---------------------------------------------------------------------------------------------------------------------------
+// //---------------------------------------------------------------------------------------------------------------------------
 
-//vendedoraDelMes(mes, anio), se le pasa dos parámetros numéricos, (mes, anio) y devuelve el nombre de la vendedora que más vendió en plata en el mes. O sea no cantidad de ventas, sino importe total de las ventas. El importe de una venta es el que indica la función precioMaquina.
+// //vendedoraDelMes(mes, anio), se le pasa dos parámetros numéricos, (mes, anio) y devuelve el nombre de la vendedora que más vendió en plata en el mes. O sea no cantidad de ventas, sino importe total de las ventas. El importe de una venta es el que indica la función precioMaquina.
 
-function vendedoraDelMes(mes,anio){
+// function vendedoraDelMes(mes,anio){
 
-  var ventasVendedora = [];
+//   var ventasVendedora = [];
 
-  for(var i=0; i<local.vendedoras.length; i++){
-      ventasVendedora[i]={nombre: local.vendedoras[i], componentes: [] }
-  }
+//   for(var i=0; i<local.vendedoras.length; i++){
+//       ventasVendedora[i]={nombre: local.vendedoras[i], componentes: [] }
+//   }
 
-  for(var i=0; i<local.ventas.length; i++){
+//   for(var i=0; i<local.ventas.length; i++){
 
-      if(mes -1 === local.ventas[i].fecha.getMonth() && anio === local.ventas[i].fecha.getFullYear()){
-          
-          for(j=0; j<ventasVendedora.length; j++){
+//       if(mes -1 === local.ventas[i].fecha.getMonth() && anio === local.ventas[i].fecha.getFullYear()){
 
-              if(local.ventas[i].nombreVendedora === ventasVendedora[j].nombre){
-            
-                  ventasVendedora[j].componentes.push(precioMaquina(local.ventas[i].componentes))
-              }
-          }
-          
-      }
-  }
+//           for(j=0; j<ventasVendedora.length; j++){
 
-  for(var i=0; i<ventasVendedora.length; i++){
+//               if(local.ventas[i].nombreVendedora === ventasVendedora[j].nombre){
 
-    if(ventasVendedora[i].componentes.length){
+//                   ventasVendedora[j].componentes.push(precioMaquina(local.ventas[i].componentes))
+//               }
+//           }
 
-          ventasVendedora[i].componentes = ventasVendedora[i].componentes.reduce(function(total,suma){
-            return total + suma
+//       }
+//   }
 
-      })
-      
-    }
-  
-  }
+//   for(var i=0; i<ventasVendedora.length; i++){
 
-  var valorMaximo = 0;
-  var vendedora ='';
+//     if(ventasVendedora[i].componentes.length){
 
-  for(var i=0; i<ventasVendedora.length; i++){
+//           ventasVendedora[i].componentes = ventasVendedora[i].componentes.reduce(function(total,suma){
+//             return total + suma
 
-    if(valorMaximo< ventasVendedora[i].componentes){
+//       })
 
-      valorMaximo = ventasVendedora[i].componentes;
+//     }
 
-      vendedora = ventasVendedora[i].nombre;
+//   }
 
-    }
-  }
-return vendedora
+//   var valorMaximo = 0;
+//   var vendedora ='';
 
-}
+//   for(var i=0; i<ventasVendedora.length; i++){
 
-console.log(vendedoraDelMes(1, 2019)); // "Ada" (vendio por $670, una máquina de $320 y otra de $350)
-console.log(vendedoraDelMes(2, 2019)); 
-console.log('\n')
-//---------------------------------------------------------------------------------------------------------------------------
+//     if(valorMaximo< ventasVendedora[i].componentes){
 
-//ventasMes(mes, anio): Obtener las ventas de un mes.
+//       valorMaximo = ventasVendedora[i].componentes;
 
-function ventasMes(mes,anio){
+//       vendedora = ventasVendedora[i].nombre;
 
-  var componentesVendidos =[];
+//     }
+//   }
+// return vendedora
 
+// }
 
-  local.ventas.map(function(cadaVenta){
+// console.log(vendedoraDelMes(1, 2019)); // "Ada" (vendio por $670, una máquina de $320 y otra de $350)
+// console.log(vendedoraDelMes(2, 2019));
+// console.log('\n')
+// //---------------------------------------------------------------------------------------------------------------------------
 
-    if(mes -1 === cadaVenta.fecha.getMonth() && anio === cadaVenta.fecha.getFullYear()){
+// //ventasMes(mes, anio): Obtener las ventas de un mes.
 
-      cadaVenta.componentes.map(function(cadaComponente){
+// function ventasMes(mes,anio){
 
-        componentesVendidos.push(cadaComponente)
-      })
-  }
-  })
+//   var componentesVendidos =[];
 
-  return precioMaquina(componentesVendidos)
-}
 
-console.log( ventasMes(1, 2019) ); // 1250
-console.log( ventasMes(2, 2019) ); // 320
-console.log('\n')
+//   local.ventas.map(function(cadaVenta){
 
-//---------------------------------------------------------------------------------------------------------------------------
+//     if(mes -1 === cadaVenta.fecha.getMonth() && anio === cadaVenta.fecha.getFullYear()){
 
-//ventasVendedora(nombre): Obtener las ventas totales realizadas por una vendedora sin límite de fecha.
+//       cadaVenta.componentes.map(function(cadaComponente){
 
-function reducir(arrayUno, arrayDos){
+//         componentesVendidos.push(cadaComponente)
+//       })
+//   }
+//   })
 
-  arrayUno.map(function(cadaVenta){
+//   return precioMaquina(componentesVendidos)
+// }
 
-    cadaVenta.map(function(cadaComponente){
+// console.log( ventasMes(1, 2019) ); // 1250
+// console.log( ventasMes(2, 2019) ); // 320
+// console.log('\n')
 
-      arrayDos.push(cadaComponente)
-    })
-  })
-  return precioMaquina (arrayDos)
-}
+// //---------------------------------------------------------------------------------------------------------------------------
 
+// //ventasVendedora(nombre): Obtener las ventas totales realizadas por una vendedora sin límite de fecha.
 
-function ventasVendedora(nombre){
+// function reducir(arrayUno, arrayDos){
 
-  var venta = [];
-  var componentesASumar = [];
+//   arrayUno.map(function(cadaVenta){
 
-  local.ventas.map(function(cadaVenta){
+//     cadaVenta.map(function(cadaComponente){
 
-    if(cadaVenta.nombreVendedora === nombre){
+//       arrayDos.push(cadaComponente)
+//     })
+//   })
+//   return precioMaquina (arrayDos)
+// }
 
-      venta.push(cadaVenta.componentes);
-      
-    }
-  })
 
-return reducir(venta, componentesASumar) 
-}
-console.log( ventasVendedora("Grace") ); // 900
-console.log( ventasVendedora("Ada") ); // 670
-console.log('\n')
+// function ventasVendedora(nombre){
 
-//---------------------------------------------------------------------------------------------------------------------------
+//   var venta = [];
+//   var componentesASumar = [];
 
-//componenteMasVendido(): Devuelve el nombre del componente que más ventas tuvo historicamente. El dato de la cantidad de ventas es el que indica la función cantidadVentasComponente
+//   local.ventas.map(function(cadaVenta){
 
-function componenteMasVendido(){
+//     if(cadaVenta.nombreVendedora === nombre){
 
-  var compo = [];
+//       venta.push(cadaVenta.componentes);
 
-  for(var i =0; i<local.precios.length; i++){
+//     }
+//   })
 
-      compo[i] = {componente: local.precios[i].componente, contador:0}
+// return reducir(venta, componentesASumar)
+// }
+// console.log( ventasVendedora("Grace") ); // 900
+// console.log( ventasVendedora("Ada") ); // 670
+// console.log('\n')
 
-  }
+// //---------------------------------------------------------------------------------------------------------------------------
 
-  for(var i = 0; i< local.ventas.length; i++){
+// //componenteMasVendido(): Devuelve el nombre del componente que más ventas tuvo historicamente. El dato de la cantidad de ventas es el que indica la función cantidadVentasComponente
 
-      for(var j=0; j<compo.length; j++){
+// function componenteMasVendido(){
 
-          if(local.ventas[i].componentes[j] === compo[j].componente){
+//   var compo = [];
 
-              compo[j].contador ++
-          }
-      }
-  }
+//   for(var i =0; i<local.precios.length; i++){
 
-  var valorMaximo = 0;
-  var componenteMasVendido = '';
+//       compo[i] = {componente: local.precios[i].componente, contador:0}
 
-  for(var i=0; i< compo.length; i++){
+//   }
 
-      if(valorMaximo < compo[i].contador){
-          
-          valorMaximo = compo[i].contador;
-          componenteMasVendido = compo[i].componente
-      }
-  }
+//   for(var i = 0; i< local.ventas.length; i++){
 
-  return componenteMasVendido
-}
+//       for(var j=0; j<compo.length; j++){
 
-console.log( componenteMasVendido()); // Monitor GPRS 3000
-console.log('\n')
+//           if(local.ventas[i].componentes[j] === compo[j].componente){
 
-//---------------------------------------------------------------------------------------------------------------------------
+//               compo[j].contador ++
+//           }
+//       }
+//   }
 
-//huboVentas(mes, anio): que indica si hubo ventas en un mes determinado.
+//   var valorMaximo = 0;
+//   var componenteMasVendido = '';
 
-function huboVentas(mes,anio){
+//   for(var i=0; i< compo.length; i++){
 
-var ventas = false;
+//       if(valorMaximo < compo[i].contador){
 
-  local.ventas.map(function(cadaVenta){
+//           valorMaximo = compo[i].contador;
+//           componenteMasVendido = compo[i].componente
+//       }
+//   }
 
-    if(mes -1 === cadaVenta.fecha.getMonth() && anio === cadaVenta.fecha.getFullYear()){
+//   return componenteMasVendido
+// }
 
-    ventas = true;        
+// console.log( componenteMasVendido()); // Monitor GPRS 3000
+// console.log('\n')
 
-    }
+// //---------------------------------------------------------------------------------------------------------------------------
 
-  })
-  return ventas
-}
+// //huboVentas(mes, anio): que indica si hubo ventas en un mes determinado.
 
-console.log( huboVentas(3, 2019) ); // false
-console.log( huboVentas(1, 2019) ); // true
-console.log( huboVentas(2, 2019) ); // true
-console.log('\n')
+// function huboVentas(mes,anio){
 
+// var ventas = false;
 
-//---------------------------------------------------------------------------------------------------------------------------
+//   local.ventas.map(function(cadaVenta){
 
-//2.Como se abrió una nueva sucursal en Caballito, ahora los datos de las ventas también tienen el nombre de la sucursal en la cual se realizó. 
-//Por ejemplo: 
-//{ fecha: new Date(2019, 1, 1), nombreVendedora: "Ada", componentes: ["Monitor GPRS 3000", "Motherboard ASUS 1500"], sucursal: 'Centro' }. 
-//Por este cambio, se pide:
+//     if(mes -1 === cadaVenta.fecha.getMonth() && anio === cadaVenta.fecha.getFullYear()){
 
-//En las ventas ya existentes, tenemos que agregar la propiedad sucursal con el valor Centro (ya que es la sucursal original).
+//     ventas = true;
 
-local.ventas.map(function(cadaVenta){
-  cadaVenta.sucursal = 'Centro'
-})
+//     }
 
+//   })
+//   return ventas
+// }
 
-//---------------------------------------------------------------------------------------------------------------------------
+// console.log( huboVentas(3, 2019) ); // false
+// console.log( huboVentas(1, 2019) ); // true
+// console.log( huboVentas(2, 2019) ); // true
+// console.log('\n')
 
-//Agregar al objeto principal la propiedad sucursales: ['Centro', 'Caballito']
 
-local.sucursales = ['Centro', 'Caballito'];
+// //---------------------------------------------------------------------------------------------------------------------------
 
+// //2.Como se abrió una nueva sucursal en Caballito, ahora los datos de las ventas también tienen el nombre de la sucursal en la cual se realizó.
+// //Por ejemplo:
+// //{ fecha: new Date(2019, 1, 1), nombreVendedora: "Ada", componentes: ["Monitor GPRS 3000", "Motherboard ASUS 1500"], sucursal: 'Centro' }.
+// //Por este cambio, se pide:
 
-//---------------------------------------------------------------------------------------------------------------------------
+// //En las ventas ya existentes, tenemos que agregar la propiedad sucursal con el valor Centro (ya que es la sucursal original).
 
-//Cargar la siguiente información en el array ventas, creando sus respectivos objetos siguiendo el patrón: fecha, nombreVendedora, 
-//componentes, sucursal
+// local.ventas.map(function(cadaVenta){
+//   cadaVenta.sucursal = 'Centro'
+// })
 
-// 12/02/2019, Hedy, [Monitor GPRS 3000, HDD Toyiva], Centro
-// 24/02/2019, Sheryl, [Motherboard ASUS 1500, HDD Wezter Dishital], Caballito
-// 01/02/2019, Ada, [Motherboard MZI, RAM Quinston Fury], Centro
-// 11/02/2019, Grace, [Monitor ASC 543, RAM Quinston], Caballito
-// 15/02/2019, Ada, [Motherboard ASUS 1200, RAM Quinston Fury], Centro
-// 12/02/2019, Hedy, [Motherboard ASUS 1500, HDD Toyiva], Caballito
-// 21/02/2019, Grace, [Motherboard MZI, RAM Quinston], Centro
-// 08/02/2019, Sheryl, [Monitor ASC 543, HDD Wezter Dishital], Centro
-// 16/02/2019, Sheryl, [Monitor GPRS 3000, RAM Quinston Fury], Centro
-// 27/02/2019, Hedy, [Motherboard ASUS 1200, HDD Toyiva], Caballito
-// 22/02/2019, Grace, [Monitor ASC 543, HDD Wezter Dishital], Centro
-// 05/02/2019, Ada, [Motherboard ASUS 1500, RAM Quinston], Centro
-// 01/02/2019, Grace, [Motherboard MZI, HDD Wezter Dishital], Centro
-// 07/02/2019, Sheryl, [Monitor GPRS 3000, RAM Quinston], Caballito
-// 14/02/2019, Ada, [Motherboard ASUS 1200, HDD Toyiva], Centro
 
-local.ventas.push({fecha: new Date(2019, 1, 12), nombreVendedora: 'Hedy', componentes: ['Monitor GPRS 3000', 'HDD Toyiva'], sucursal: 'Centro'})
-local.ventas.push({fecha: new Date(2019, 1, 24), nombreVendedora: 'Sheryl', componentes: ['Motherboard ASUS 1500', 'HDD Wezter Dishital'], sucursal: 'Caballito'})
-local.ventas.push({fecha: new Date(2019, 1, 01), nombreVendedora: 'Ada', componentes: ['Motherboard MZI', 'RAM Quinston Fury'], sucursal: 'Centro'})
-local.ventas.push({fecha: new Date(2019, 1, 11), nombreVendedora: 'Grace', componentes: ['Monitor ASC 543', 'RAM Quinston'], sucursal: 'Caballito'})
-local.ventas.push({fecha: new Date(2019, 1, 15), nombreVendedora: 'Ada', componentes: ['Motherboard ASUS 1200', 'RAM Quinston Fury'], sucursal: 'Centro'})
-local.ventas.push({fecha: new Date(2019, 1, 12), nombreVendedora: 'Hedy', componentes: ['Motherboard ASUS 1500', 'HDD Toyiva'], sucursal: 'Caballito'})
-local.ventas.push({fecha: new Date(2019, 1, 21), nombreVendedora: 'Grace', componentes: ['Motherboard MZI', 'RAM Quinston'], sucursal: 'Centro'})
-local.ventas.push({fecha: new Date(2019, 1, 08), nombreVendedora: 'Sheryl', componentes: ['Monitor ASC 543', 'HDD Wezter Dishital'], sucursal: 'Centro'})
-local.ventas.push({fecha: new Date(2019, 1, 16), nombreVendedora: 'Sheryl', componentes: ['Monitor GPRS 3000', 'RAM Quinston Fury'], sucursal: 'Centro'})
-local.ventas.push({fecha: new Date(2019, 1, 27), nombreVendedora: 'Hedy', componentes: ['Motherboard ASUS 1200', 'HDD Toyiva'], sucursal: 'Caballito'})
-local.ventas.push({fecha: new Date(2019, 1, 22), nombreVendedora: 'Grace', componentes: ['Monitor ASC 543', 'HDD Wezter Dishital'], sucursal: 'Centro'})
-local.ventas.push({fecha: new Date(2019, 1, 05), nombreVendedora: 'Ada', componentes: ['Motherboard ASUS 1500', 'RAM Quinston'], sucursal: 'Centro'})
-local.ventas.push({fecha: new Date(2019, 1, 01), nombreVendedora: 'Grace', componentes: ['Motherboard MZI', 'HDD Wezter Dishital'], sucursal: 'Centro'})
-local.ventas.push({fecha: new Date(2019, 1, 07), nombreVendedora: 'Sheryl', componentes: ['Monitor GPRS 3000', 'RAM Quinston'], sucursal: 'Caballito'})
-local.ventas.push({fecha: new Date(2019, 1, 14), nombreVendedora: 'Ada', componentes: ['Motherboard ASUS 1200', 'HDD Toyiva'], sucursal: 'Centro'})
+// //---------------------------------------------------------------------------------------------------------------------------
 
+// //Agregar al objeto principal la propiedad sucursales: ['Centro', 'Caballito']
 
-//---------------------------------------------------------------------------------------------------------------------------
+// local.sucursales = ['Centro', 'Caballito'];
 
-//Crear la función ventasSucursal(sucursal), que obtiene las ventas totales realizadas por una sucursal sin límite de fecha.
 
-function ventasSucursal(sucursal){
+// //---------------------------------------------------------------------------------------------------------------------------
 
-  var venta = [];
-  var componentesASumar = [];
-  
-  local.ventas.map(function(cadaVenta){
+// //Cargar la siguiente información en el array ventas, creando sus respectivos objetos siguiendo el patrón: fecha, nombreVendedora,
+// //componentes, sucursal
 
-    if(cadaVenta.sucursal === sucursal){
+// // 12/02/2019, Hedy, [Monitor GPRS 3000, HDD Toyiva], Centro
+// // 24/02/2019, Sheryl, [Motherboard ASUS 1500, HDD Wezter Dishital], Caballito
+// // 01/02/2019, Ada, [Motherboard MZI, RAM Quinston Fury], Centro
+// // 11/02/2019, Grace, [Monitor ASC 543, RAM Quinston], Caballito
+// // 15/02/2019, Ada, [Motherboard ASUS 1200, RAM Quinston Fury], Centro
+// // 12/02/2019, Hedy, [Motherboard ASUS 1500, HDD Toyiva], Caballito
+// // 21/02/2019, Grace, [Motherboard MZI, RAM Quinston], Centro
+// // 08/02/2019, Sheryl, [Monitor ASC 543, HDD Wezter Dishital], Centro
+// // 16/02/2019, Sheryl, [Monitor GPRS 3000, RAM Quinston Fury], Centro
+// // 27/02/2019, Hedy, [Motherboard ASUS 1200, HDD Toyiva], Caballito
+// // 22/02/2019, Grace, [Monitor ASC 543, HDD Wezter Dishital], Centro
+// // 05/02/2019, Ada, [Motherboard ASUS 1500, RAM Quinston], Centro
+// // 01/02/2019, Grace, [Motherboard MZI, HDD Wezter Dishital], Centro
+// // 07/02/2019, Sheryl, [Monitor GPRS 3000, RAM Quinston], Caballito
+// // 14/02/2019, Ada, [Motherboard ASUS 1200, HDD Toyiva], Centro
 
-      venta.push(cadaVenta.componentes)
-    }
-  })
-  
-  return reducir(venta, componentesASumar) 
+// local.ventas.push({fecha: new Date(2019, 1, 12), nombreVendedora: 'Hedy', componentes: ['Monitor GPRS 3000', 'HDD Toyiva'], sucursal: 'Centro'})
+// local.ventas.push({fecha: new Date(2019, 1, 24), nombreVendedora: 'Sheryl', componentes: ['Motherboard ASUS 1500', 'HDD Wezter Dishital'], sucursal: 'Caballito'})
+// local.ventas.push({fecha: new Date(2019, 1, 01), nombreVendedora: 'Ada', componentes: ['Motherboard MZI', 'RAM Quinston Fury'], sucursal: 'Centro'})
+// local.ventas.push({fecha: new Date(2019, 1, 11), nombreVendedora: 'Grace', componentes: ['Monitor ASC 543', 'RAM Quinston'], sucursal: 'Caballito'})
+// local.ventas.push({fecha: new Date(2019, 1, 15), nombreVendedora: 'Ada', componentes: ['Motherboard ASUS 1200', 'RAM Quinston Fury'], sucursal: 'Centro'})
+// local.ventas.push({fecha: new Date(2019, 1, 12), nombreVendedora: 'Hedy', componentes: ['Motherboard ASUS 1500', 'HDD Toyiva'], sucursal: 'Caballito'})
+// local.ventas.push({fecha: new Date(2019, 1, 21), nombreVendedora: 'Grace', componentes: ['Motherboard MZI', 'RAM Quinston'], sucursal: 'Centro'})
+// local.ventas.push({fecha: new Date(2019, 1, 08), nombreVendedora: 'Sheryl', componentes: ['Monitor ASC 543', 'HDD Wezter Dishital'], sucursal: 'Centro'})
+// local.ventas.push({fecha: new Date(2019, 1, 16), nombreVendedora: 'Sheryl', componentes: ['Monitor GPRS 3000', 'RAM Quinston Fury'], sucursal: 'Centro'})
+// local.ventas.push({fecha: new Date(2019, 1, 27), nombreVendedora: 'Hedy', componentes: ['Motherboard ASUS 1200', 'HDD Toyiva'], sucursal: 'Caballito'})
+// local.ventas.push({fecha: new Date(2019, 1, 22), nombreVendedora: 'Grace', componentes: ['Monitor ASC 543', 'HDD Wezter Dishital'], sucursal: 'Centro'})
+// local.ventas.push({fecha: new Date(2019, 1, 05), nombreVendedora: 'Ada', componentes: ['Motherboard ASUS 1500', 'RAM Quinston'], sucursal: 'Centro'})
+// local.ventas.push({fecha: new Date(2019, 1, 01), nombreVendedora: 'Grace', componentes: ['Motherboard MZI', 'HDD Wezter Dishital'], sucursal: 'Centro'})
+// local.ventas.push({fecha: new Date(2019, 1, 07), nombreVendedora: 'Sheryl', componentes: ['Monitor GPRS 3000', 'RAM Quinston'], sucursal: 'Caballito'})
+// local.ventas.push({fecha: new Date(2019, 1, 14), nombreVendedora: 'Ada', componentes: ['Motherboard ASUS 1200', 'HDD Toyiva'], sucursal: 'Centro'})
 
-}
 
-console.log( ventasSucursal("Centro") ); // 4195
-console.log( ventasSucursal("Caballito") ); // 
-console.log('\n')
+// //---------------------------------------------------------------------------------------------------------------------------
 
-//Las funciones ventasSucursal y ventasVendedora tienen mucho código en común, ya que es la misma funcionalidad pero trabajando con una 
-//propiedad distinta. Entonces, ¿cómo harías para que ambas funciones reutilicen código y evitemos repetir?
+// //Crear la función ventasSucursal(sucursal), que obtiene las ventas totales realizadas por una sucursal sin límite de fecha.
 
-//Resuelto más arriba 
+// function ventasSucursal(sucursal){
 
+//   var venta = [];
+//   var componentesASumar = [];
 
-//---------------------------------------------------------------------------------------------------------------------------
+//   local.ventas.map(function(cadaVenta){
 
-//Crear la función sucursalDelMes(mes, anio), que se le pasa dos parámetros numéricos, (mes, anio) y devuelve el nombre de la sucursal que más vendió en plata en el mes. 
-//No cantidad de ventas, sino importe total de las ventas. El importe de una venta es el que indica la función precioMaquina.
+//     if(cadaVenta.sucursal === sucursal){
 
-function sucursalDelMes(mes, anio){
+//       venta.push(cadaVenta.componentes)
+//     }
+//   })
 
-  var sucursales = [];
+//   return reducir(venta, componentesASumar)
 
-  for(var i=0; i<local.sucursales.length; i++){
+// }
 
-    sucursales[i]={nombre: local.sucursales[i], componentes: [] }
-}
+// console.log( ventasSucursal("Centro") ); // 4195
+// console.log( ventasSucursal("Caballito") ); //
+// console.log('\n')
 
-  for(var i=0; i<local.ventas.length; i++){
+// //Las funciones ventasSucursal y ventasVendedora tienen mucho código en común, ya que es la misma funcionalidad pero trabajando con una
+// //propiedad distinta. Entonces, ¿cómo harías para que ambas funciones reutilicen código y evitemos repetir?
 
-    if(mes -1 === local.ventas[i].fecha.getMonth() && anio === local.ventas[i].fecha.getFullYear()){
-      
-      for(var j=0; j<sucursales.length; j++){
+// //Resuelto más arriba
 
-        if(local.ventas[i].sucursal === sucursales[j].nombre){
 
-          for(var k =0; k<local.ventas[i].componentes.length; k++){
+// //---------------------------------------------------------------------------------------------------------------------------
 
-            sucursales[j].componentes.push(local.ventas[i].componentes[k])
-          }
-        }
-      }
-    }
-   
-  }
-sucursales.map(function(cadaSucursal){
+// //Crear la función sucursalDelMes(mes, anio), que se le pasa dos parámetros numéricos, (mes, anio) y devuelve el nombre de la sucursal que más vendió en plata en el mes.
+// //No cantidad de ventas, sino importe total de las ventas. El importe de una venta es el que indica la función precioMaquina.
 
-  cadaSucursal.componentes = precioMaquina(cadaSucursal.componentes);
-})
+// function sucursalDelMes(mes, anio){
 
-var valorMaximo = 0;
+//   var sucursales = [];
 
-var sucursalMasVentas = '';
+//   for(var i=0; i<local.sucursales.length; i++){
 
-  for(var i=0; i < sucursales.length; i++){
+//     sucursales[i]={nombre: local.sucursales[i], componentes: [] }
+// }
 
-      if(valorMaximo < sucursales[i].componentes){
-          
-          valorMaximo = sucursales[i].componentes;
+//   for(var i=0; i<local.ventas.length; i++){
 
-          sucursalMasVentas = sucursales[i].nombre;
-      }
-  }
+//     if(mes -1 === local.ventas[i].fecha.getMonth() && anio === local.ventas[i].fecha.getFullYear()){
 
-  return sucursalMasVentas
-}
+//       for(var j=0; j<sucursales.length; j++){
 
+//         if(local.ventas[i].sucursal === sucursales[j].nombre){
 
-console.log( sucursalDelMes(1, 2019) ); // "Centro"
-console.log( sucursalDelMes(2, 2019) ); 
-console.log('\n')
+//           for(var k =0; k<local.ventas[i].componentes.length; k++){
 
-//---------------------------------------------------------------------------------------------------------------------------
+//             sucursales[j].componentes.push(local.ventas[i].componentes[k])
+//           }
+//         }
+//       }
+//     }
 
-//3. Para tener una mejor muestra de como está resultando el local, queremos desarrollar un reporte que nos muestre las ventas por sucursal y por mes. Para esto, necesitamos crear las siguientes funciones:
+//   }
+// sucursales.map(function(cadaSucursal){
 
-//renderPorMes(): Muestra una lista ordenada del importe total vendido por cada mes/año
+//   cadaSucursal.componentes = precioMaquina(cadaSucursal.componentes);
+// })
 
-function renderPorMes(){
+// var valorMaximo = 0;
 
-  var ventasRender = {anio:[local.ventas[0].fecha.getUTCFullYear()], 
-                      meses: [{mes:1, nombre: 'enero'}, {mes:2, nombre: 'febrero'}, {mes:3, nombre: 'marzo'}, {mes:4, nombre: 'abril'}, {mes:5, nombre: 'mayo'}, {mes: 6, nombre: 'junio'},
-                      {mes:7, nombre: 'julio'}, {mes:8, nombre: 'agosto'}, {mes:9, nombre: 'septiembre'}, {mes:10, nombre: 'octubre'},{mes:11, nombre: 'noviembre'},{mes:12, nombre: 'diciembre'}]
-                    }  
+// var sucursalMasVentas = '';
 
+//   for(var i=0; i < sucursales.length; i++){
 
-local.ventas.map(function(cadaVenta){
+//       if(valorMaximo < sucursales[i].componentes){
 
-  if(cadaVenta.fecha.getFullYear() !== ventasRender.anio[0]){
+//           valorMaximo = sucursales[i].componentes;
 
-    ventasRender.anio.push(cadaVenta.fecha.getFullYear())
-  }
-  
-})
+//           sucursalMasVentas = sucursales[i].nombre;
+//       }
+//   }
 
-for(var i = 0; i<ventasRender.anio.length; i++){
+//   return sucursalMasVentas
+// }
 
-  for(var j=0; j<ventasRender.meses.length; j++){
-   
-  return 'ventas por mes:\n' + ventasRender.meses[j].nombre + ' ' + ventasRender.anio[i] + ': ' + ventasMes(ventasRender.meses[j].mes, ventasRender.anio[i])
-    //acá no logro retornar sin cortar el for
-  }
-}
-}
 
-console.log( renderPorMes() );
-console.log('\n')
+// console.log( sucursalDelMes(1, 2019) ); // "Centro"
+// console.log( sucursalDelMes(2, 2019) );
+// console.log('\n')
 
-// Ventas por mes:
-//   Total de enero 2019: 1250,
-//   Total de febrero 2019: 4210
+// //---------------------------------------------------------------------------------------------------------------------------
 
+// //3. Para tener una mejor muestra de como está resultando el local, queremos desarrollar un reporte que nos muestre las ventas por sucursal y por mes. Para esto, necesitamos crear las siguientes funciones:
 
+// //renderPorMes(): Muestra una lista ordenada del importe total vendido por cada mes/año
 
-//---------------------------------------------------------------------------------------------------------------------------
+// function renderPorMes(){
 
-//renderPorSucursal(): Muestra una lista del importe total vendido por cada sucursal
+//   var ventasRender = {anio:[local.ventas[0].fecha.getUTCFullYear()],
+//                       meses: [{mes:1, nombre: 'enero'}, {mes:2, nombre: 'febrero'}, {mes:3, nombre: 'marzo'}, {mes:4, nombre: 'abril'}, {mes:5, nombre: 'mayo'}, {mes: 6, nombre: 'junio'},
+//                       {mes:7, nombre: 'julio'}, {mes:8, nombre: 'agosto'}, {mes:9, nombre: 'septiembre'}, {mes:10, nombre: 'octubre'},{mes:11, nombre: 'noviembre'},{mes:12, nombre: 'diciembre'}]
+//                     }
 
-function renderPorSucursal(){
 
-  var sucursales = [];
+// local.ventas.map(function(cadaVenta){
 
-  local.sucursales.map(function(cadaSucursal){
+//   if(cadaVenta.fecha.getFullYear() !== ventasRender.anio[0]){
 
-    sucursales.push({sucursal: cadaSucursal, componentes: []})
-  })
-  
-  for(var i=0; i<sucursales.length; i++){
+//     ventasRender.anio.push(cadaVenta.fecha.getFullYear())
+//   }
 
-    for(var j=0; j<local.ventas.length; j++){
+// })
 
-      if(sucursales[i].sucursal === local.ventas[j].sucursal){
+// for(var i = 0; i<ventasRender.anio.length; i++){
 
-        for(var k=0; k<local.ventas[j].componentes.length; k++){
+//   for(var j=0; j<ventasRender.meses.length; j++){
 
-          sucursales[i].componentes.push(local.ventas[j].componentes[k])
-        }
-        
-      }
-    }
-  }
-  var porSucursal =['ventas por sucursal:\n'];
+//   return 'ventas por mes:\n' + ventasRender.meses[j].nombre + ' ' + ventasRender.anio[i] + ': ' + ventasMes(ventasRender.meses[j].mes, ventasRender.anio[i])
+//     //acá no logro retornar sin cortar el for
+//   }
+// }
+// }
 
-  for(var i=0; i<sucursales.length; i++){
-  
-    porSucursal.push('Total de ' + sucursales[i].sucursal + ': ' +  precioMaquina(sucursales[i].componentes)+ '\n')
+// console.log( renderPorMes() );
+// console.log('\n')
 
-  }
-return porSucursal
-}
-//Como no podía retornar dentro de un for, acá retorné desde un array, pero tampoco queda bien.
-console.log( renderPorSucursal() );
+// // Ventas por mes:
+// //   Total de enero 2019: 1250,
+// //   Total de febrero 2019: 4210
 
-// Ventas por sucursal:
-//   Total de Centro: 4195
-//   Total de Caballito: 1265
 
 
-//---------------------------------------------------------------------------------------------------------------------------
+// //---------------------------------------------------------------------------------------------------------------------------
 
-//render(): Tiene que mostrar la unión de los dos reportes anteriores, cual fue el producto más vendido y la vendedora que más ingresos generó
+// //renderPorSucursal(): Muestra una lista del importe total vendido por cada sucursal
 
-function vendedora(){
+// function renderPorSucursal(){
 
-  var ventasVendedora = [];
+//   var sucursales = [];
 
-  for(var i=0; i<local.vendedoras.length; i++){
-      ventasVendedora[i]={nombre: local.vendedoras[i], componentes: [] }
-  }
+//   local.sucursales.map(function(cadaSucursal){
 
-  for(var i=0; i<local.ventas.length; i++){
-          
-          for(j=0; j<ventasVendedora.length; j++){
+//     sucursales.push({sucursal: cadaSucursal, componentes: []})
+//   })
 
-              if(local.ventas[i].nombreVendedora === ventasVendedora[j].nombre){
-            
-                  ventasVendedora[j].componentes.push(precioMaquina(local.ventas[i].componentes))
-              }
-          } 
-      }
+//   for(var i=0; i<sucursales.length; i++){
 
-  for(var i=0; i<ventasVendedora.length; i++){
+//     for(var j=0; j<local.ventas.length; j++){
 
-    if(ventasVendedora[i].componentes.length){
+//       if(sucursales[i].sucursal === local.ventas[j].sucursal){
 
-          ventasVendedora[i].componentes = ventasVendedora[i].componentes.reduce(function(total,suma){
-            return total + suma
+//         for(var k=0; k<local.ventas[j].componentes.length; k++){
 
-      })
-      
-    }
-  
-  }
+//           sucursales[i].componentes.push(local.ventas[j].componentes[k])
+//         }
 
-  var valorMaximo = 0;
-  var vendedora ='';
+//       }
+//     }
+//   }
+//   var porSucursal =['ventas por sucursal:\n'];
 
-  for(var i=0; i<ventasVendedora.length; i++){
+//   for(var i=0; i<sucursales.length; i++){
 
-    if(valorMaximo< ventasVendedora[i].componentes){
+//     porSucursal.push('Total de ' + sucursales[i].sucursal + ': ' +  precioMaquina(sucursales[i].componentes)+ '\n')
 
-      valorMaximo = ventasVendedora[i].componentes;
+//   }
+// return porSucursal
+// }
+// //Como no podía retornar dentro de un for, acá retorné desde un array, pero tampoco queda bien.
+// console.log( renderPorSucursal() );
 
-      vendedora = ventasVendedora[i].nombre;
+// // Ventas por sucursal:
+// //   Total de Centro: 4195
+// //   Total de Caballito: 1265
 
-    }
-  }
-return vendedora
 
-} 
+// //---------------------------------------------------------------------------------------------------------------------------
 
-function render(){
-  
-return 'Reporte ' + '\nVentas por mes: \n' + renderPorMes() + '\n\n ventas por sucursal: ' + renderPorSucursal() + '\n Producto estrella: ' + componenteMasVendido () + '\n\n Vendedora que más ingresos generó: ' + vendedora()
-}
+// //render(): Tiene que mostrar la unión de los dos reportes anteriores, cual fue el producto más vendido y la vendedora que más ingresos generó
 
+// function vendedora(){
 
-console.log( render() );
-// Reporte
-// Ventas por mes:
-//   Total de enero 2019: 1250
-//   Total de febrero 2019: 4210
-// Ventas por sucursal:
-//   Total de Centro: 4195
-//   Total de Caballito: 1265
-// Producto estrella: Monitor GPRS 3000
-// Vendedora que más ingresos generó: Grace
+//   var ventasVendedora = [];
+
+//   for(var i=0; i<local.vendedoras.length; i++){
+//       ventasVendedora[i]={nombre: local.vendedoras[i], componentes: [] }
+//   }
+
+//   for(var i=0; i<local.ventas.length; i++){
+
+//           for(j=0; j<ventasVendedora.length; j++){
+
+//               if(local.ventas[i].nombreVendedora === ventasVendedora[j].nombre){
+
+//                   ventasVendedora[j].componentes.push(precioMaquina(local.ventas[i].componentes))
+//               }
+//           }
+//       }
+
+//   for(var i=0; i<ventasVendedora.length; i++){
+
+//     if(ventasVendedora[i].componentes.length){
+
+//           ventasVendedora[i].componentes = ventasVendedora[i].componentes.reduce(function(total,suma){
+//             return total + suma
+
+//       })
+
+//     }
+
+//   }
+
+//   var valorMaximo = 0;
+//   var vendedora ='';
+
+//   for(var i=0; i<ventasVendedora.length; i++){
+
+//     if(valorMaximo< ventasVendedora[i].componentes){
+
+//       valorMaximo = ventasVendedora[i].componentes;
+
+//       vendedora = ventasVendedora[i].nombre;
+
+//     }
+//   }
+// return vendedora
+
+// }
+
+// function render(){
+
+// return 'Reporte ' + '\nVentas por mes: \n' + renderPorMes() + '\n\n ventas por sucursal: ' + renderPorSucursal() + '\n Producto estrella: ' + componenteMasVendido () + '\n\n Vendedora que más ingresos generó: ' + vendedora()
+// }
+
+
+// console.log( render() );
+// // Reporte
+// // Ventas por mes:
+// //   Total de enero 2019: 1250
+// //   Total de febrero 2019: 4210
+// // Ventas por sucursal:
+// //   Total de Centro: 4195
+// //   Total de Caballito: 1265
+// // Producto estrella: Monitor GPRS 3000
+// // Vendedora que más ingresos generó: Grace
