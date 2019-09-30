@@ -55,28 +55,16 @@ console.log('\n')
 //---------------------------------------------------------------------------------------------------------------------------
 
 //cantidadVentasComponente(componente): recibe un componente y devuelve la cantidad de veces que fue vendido, o sea que
-//formó parte de una máquina que se vendió. La lista de ventas no se pasa por parámetro, se asume que está identificada por la variable ventas.
+//formó parte de una máquina que se vendió. La lista de ventas no se pasa por parámetro, se asume que está identificada
+//por la variable ventas.
 
-
-// function cantidadVentasComponente(componente){
-
-//   var i = 0;
-
-//   local.ventas.map(function(cadaVenta){
-
-//      cadaVenta.componentes.map(function(cadaComponente){
-
-//        if(componente === cadaComponente){
-//          i++;
-//        }
-//      })
-//   })
-
-//   return i;
-// }
+const cantidadVentasComponente = componente =>{
+  let i = 0
+  local.ventas.map(v=> v.componentes.map(c=>componente === c ? i++ : null))
+  return i;
+}
 
 console.log('cantidadVentasComponente');
-
 console.log( cantidadVentasComponente("Monitor GPRS 3000") ); // 3
 console.log( cantidadVentasComponente("Motherboard ASUS 1500") );//2
 console.log( cantidadVentasComponente("Monitor ASC 543") );
