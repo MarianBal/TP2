@@ -36,29 +36,23 @@ var local = {
 //que es la suma de los precios de cada componente incluido
 
 const precioMaquina = array=>{
-
   const sumar = [];
 
-  array.length ? (array.map(a=>local.precios.map(p=>a === p.componente ? sumar.push(p.precio): null)))
-  : 0;
-
-  return array.length ? sumar.reduce((total, suma)=> total + suma) : 0;
+  array.length ? (array.map(a=>local.precios.map(p=>a === p.componente ? sumar.push(p.precio): null))): 0;
+  return sumar.reduce((total, suma)=> total + suma)
 }
-
-console.log('PrecioMaquina')
 console.log(precioMaquina(["Monitor GPRS 3000", "Motherboard ASUS 1500"]))
 console.log(precioMaquina(["Monitor GPRS 3000", "Motherboard ASUS 1500"]))
 console.log(precioMaquina(["Monitor ASC 543", "Motherboard MZI"]))
 console.log(precioMaquina(["Monitor ASC 543", "Motherboard ASUS 1200"]))
 console.log(precioMaquina(["Monitor GPRS 3000", "Motherboard ASUS 1200"]))
-
 console.log('\n')
 
 //---------------------------------------------------------------------------------------------------------------------------
 
 //cantidadVentasComponente(componente): recibe un componente y devuelve la cantidad de veces que fue vendido, o sea que
-//formó parte de una máquina que se vendió. La lista de ventas no se pasa por parámetro, se asume que está identificada
-//por la variable ventas.
+//formó parte de una máquina que se vendió. La lista de ventas no se pasa por parámetro, se asume que está identificada por la variable ventas.
+
 
 const cantidadVentasComponente = componente =>{
   let i = 0
@@ -66,7 +60,6 @@ const cantidadVentasComponente = componente =>{
   return i;
 }
 
-console.log('cantidadVentasComponente');
 console.log( cantidadVentasComponente("Monitor GPRS 3000") ); // 3
 console.log( cantidadVentasComponente("Motherboard ASUS 1500") );//2
 console.log( cantidadVentasComponente("Monitor ASC 543") );
@@ -90,80 +83,41 @@ const vendedoraDelMes = (mes, anio)=>{
 
   local.vendedoras.map(v=>vendedoras.push({vendedora:v, componentes:[], precio:0}))
 
-  local.ventas.map(v => v.fecha.getMonth() === mes-1 && v.fecha.getFullYear() === anio ?
+  local.ventas.map(v => (v.fecha.getMonth() === mes-1 && v.fecha.getFullYear()) === anio ?
 
-  (vendedoras.map(ven=>ven.vendedora === v.nombreVendedora ? ven.componentes = [...v.componentes]: ''))
+  (vendedoras.map(ven=>ven.vendedora === v.nombreVendedora ? ven.componentes.push(...v.componentes): ''))
   :null)
-
-  precioMaquina(vendedoras[0].componentes)
 
   let precios = {vendedora: '', precio: 0}
 
-  //vendedoras.map(v=> precioMaquina(v.componentes) > precios.precio ? precios= {vendedora:v.vendedora, precio:v.precio } : null)
+  vendedoras.map(v=> v.componentes.length ? precioMaquina(v.componentes)> precios.precio ? precios= {vendedora:v.vendedora, precio:precioMaquina(v.componentes) } : 0:0)
 
+  return precios.vendedora
 }
 
-// function vendedoraDelMes(mes,anio){
-
-//   for(var i=0; i<ventasVendedora.length; i++){
-
-//     if(ventasVendedora[i].componentes.length){
-
-//           ventasVendedora[i].componentes = ventasVendedora[i].componentes.reduce(function(total,suma){
-//             return total + suma
-
-//       })
-
-//     }
-
-//   }
-
-//   var valorMaximo = 0;
-//   var vendedora ='';
-
-//   for(var i=0; i<ventasVendedora.length; i++){
-
-//     if(valorMaximo< ventasVendedora[i].componentes){
-
-//       valorMaximo = ventasVendedora[i].componentes;
-
-//       vendedora = ventasVendedora[i].nombre;
-
-//     }
-//   }
-// return vendedora
-
-// }
 console.log('vendedoraDelMes')
 console.log(vendedoraDelMes(1, 2019)); // "Ada" (vendio por $670, una máquina de $320 y otra de $350)
-// console.log(vendedoraDelMes(2, 2019));
+console.log(vendedoraDelMes(2, 2019));
 console.log('\n')
+
 // //---------------------------------------------------------------------------------------------------------------------------
 
-// //ventasMes(mes, anio): Obtener las ventas de un mes.
 
-// function ventasMes(mes,anio){
+//ventasMes(mes, anio): Obtener las ventas de un mes.
 
-//   var componentesVendidos =[];
+const ventasMes = (mes, anio) =>{
 
+  const componentesVendidos = [];
 
-//   local.ventas.map(function(cadaVenta){
+  local.ventas.map(v=>(v.fecha.getMonth() === mes-1 && v.fecha.getFullYear()) === anio ? componentesVendidos.push(...v.componentes):'')
 
-//     if(mes -1 === cadaVenta.fecha.getMonth() && anio === cadaVenta.fecha.getFullYear()){
+  return precioMaquina(componentesVendidos)
+}
 
-//       cadaVenta.componentes.map(function(cadaComponente){
-
-//         componentesVendidos.push(cadaComponente)
-//       })
-//   }
-//   })
-
-//   return precioMaquina(componentesVendidos)
-// }
-
-// console.log( ventasMes(1, 2019) ); // 1250
-// console.log( ventasMes(2, 2019) ); // 320
-// console.log('\n')
+console.log('ventasMes')
+console.log( ventasMes(1, 2019) ); // 1250
+console.log( ventasMes(2, 2019) ); // 320
+console.log('\n')
 
 // //---------------------------------------------------------------------------------------------------------------------------
 
